@@ -7,7 +7,7 @@
   "linkerEnabled": true,
   "resources": {
     "assembly": {
-      "FugetGalleryWasm.dll": "sha256-RPljhfN0Cv6C\/WeRNTEG7rEXg5ou3O+0q8MlwxY9zus=",
+      "FugetGalleryWasm.dll": "sha256-gJimIqTSK90uPdEEilqxYjUMP1DzlZPKt+3vIZq0Fpg=",
       "Humanizer.dll": "sha256-QN\/2+uvMbiur43ADhTUJsgUOgG7fPF8UH7uF\/cDRvqc=",
       "ICSharpCode.Decompiler.dll": "sha256-ZDVI1ynFky8Kb5fHnH2cEuH3F7nHUMeuAul46l\/d6og=",
       "ListDiff.dll": "sha256-P5YgqsjbrNgGZfJQoPZw3rpH6ZFH5zh1fBX21JDXzBA=",
