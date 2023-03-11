@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="robots" content="nofollow" />
+    <title>FugetGalleryWasm</title>
+    <base href="/" />
+    <!--<link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />-->
+    <!--<link href="css/app.css" rel="stylesheet" />-->
+    <!--<link href="FugetGalleryWasm.styles.css" rel="stylesheet" />-->
+
+    <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.rawgit.com/tonsky/FiraCode/1.205/distr/fira_code.css" />
+    <link rel="stylesheet" href="css/site.css" asp-append-version="true" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118756821-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-118756821-1');
+    </script>
+</head>
+
+<body>
+    <div id="app">Loading...</div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+    <script src="_framework/blazor.webassembly.js"></script>
+
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+            crossorigin="anonymous"
+            integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+    </script>
+    <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+            crossorigin="anonymous"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+    </script>
+    <script src="/js/site.js" asp-append-version="true"></script>
+
+
+    <script>
+
+        function loadPackageDetails(queryUrl) {
+        var asearch = document.getElementById("asearch");
+        var anav = document.getElementById("anav");
+        if (asearch && anav) {
+            var searchResults = {};
+            var rhtml = null;
+            function showResults(r) {
+                function c(t) { return document.createElement(t); }
+                function getIcon(t) {
+                    if (t == "type") return "class";
+                    if (t == "method") return "method";
+                    if (t == "field") return "field";
+                    if (t == "event") return "event";
+                    if (t == "property") return "property";
+                    return "unknown";
+                }
+                function getColor(t) {
+                    if (t == "type") return "c-tr";
+                    if (t == "method") return "c-mr";
+                    if (t == "event") return "c-er";
+                    return "";
+                }
+                if (rhtml) rhtml.remove();
+                rhtml = c("div");
+                var h = c("h4");
+                h.appendChild(document.createTextNode(r.results.length >= 100 ? "100+ Results" : r.results.length + " Results"));
+                var ul = c("ul");
+                ul.className = "long-item-list";
+                rhtml.appendChild(h);
+                rhtml.appendChild(ul);
+                r.results.forEach(function (e) {
+                    var li = c("li");
+                    var a = c("a");
+                    var g = c("span");
+                    var sm = c("small");
+                    sm.appendChild(document.createTextNode(e.parent));
+                    g.className = "fugeticon fugeticon-" + getIcon(e.type);
+                    li.appendChild(a);
+                    a.className = "link " + getColor(e.type);
+                    a.appendChild(g);
+                    a.appendChild(document.createTextNode(" " + e.name + " "));
+                    a.appendChild(sm);
+                    a.href = e.link;
+                    ul.appendChild(li);
+                });
+                anav.hidden = true;
+                asearch.parentElement.appendChild(rhtml);
+            }
+            function hideResults() {
+                if (rhtml) rhtml.remove();
+                anav.hidden = false;
+            }
+            function queryResults(text, k) {
+                var req = new XMLHttpRequest();
+                req.addEventListener("load", function (e) {
+                    if (req.readyState == 4) {
+                        var r = JSON.parse(req.responseText);
+                        k(r);
+                    }
+                });
+                req.open("GET", queryUrl + encodeURIComponent(text));
+                req.send();
+            }
+            function doSearch() {
+                var text = (asearch.value + "").trim();
+                if (text.length == 0) {
+                    hideResults();
+                }
+                else if (searchResults[text]) {
+                    showResults(searchResults[text]);
+                }
+                else {
+                    queryResults(text, function (r) {
+                        searchResults[text] = r;
+                        if ((asearch.value + "").trim() == text) {
+                            showResults(r);
+                        }
+                    });
+                }
+            }
+            asearch.addEventListener("input", function (e) {
+                doSearch();
+            });
+        }
+        }
+
+    </script>
+</body>
+
+</html>
