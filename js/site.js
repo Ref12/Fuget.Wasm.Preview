@@ -59,10 +59,10 @@ function renderMru(id, title, sorter)
         var p = mrus[i];
         var $li = $("<li class='media'></li>");
         var $left = $("<div class=\"media-left\"/>");
-        $left.append($("<a/>").attr("href", "/packages/" + encodeURIComponent(p.id)).append($("<img class='package-icon-in-list' width='64' height='64' onError=\"this.onerror=null;this.src='css/images/no-icon.png';\" />").attr("src", p.iconUrl)));
+        $left.append($("<a/>").attr("href", "packages/" + encodeURIComponent(p.id)).append($("<img class='package-icon-in-list' width='64' height='64' onError=\"this.onerror=null;this.src='css/images/no-icon.png';\" />").attr("src", p.iconUrl)));
         var $body = $("<div class='media-body'></div>");
         var $h = $("<h4></h4>");
-        $h.append($("<a/>").attr("href", "/packages/" + encodeURIComponent(p.id)).text(p.id));
+        $h.append($("<a/>").attr("href", "packages/" + encodeURIComponent(p.id)).text(p.id));
         $h.append($("<small/>").text(" by " + p.authors));
         $body.append($h);
         $body.append($("<p style=\"overflow:auto\">").text(p.description));
